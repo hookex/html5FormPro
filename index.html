@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+    <style>
+        /*** common style ***/
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: "SF Pro SC", "SF Pro Text", "SF Pro Icons", "PingFang SC", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            box-sizing: border-box;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: inline-block;
+            margin-bottom: 6px;
+            margin-left: 2px;
+        }
+
+        .form-group .form-text {
+            display: block;
+            height: 14px;
+            margin-top: 4px;
+        }
+
+        .form-group .form-control {
+            display: block;
+            width: 100%;
+            height: 38px;
+            padding: 4px 8px;
+            font-size: 14px;
+            color: #555555;;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+
+
+        .form-group .form-control:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+        }
+
+        .form-group .form-text {
+            font-size: 12px;
+            line-height: 14px;
+            color: #666666;
+        }
+
+        .form-group:not(.no-verify) .form-control:invalid {
+            border: 2px solid #E64D3A;
+        }
+
+        .form-group:not(.no-verify) .form-control:valid {
+            border: 2px solid #28a745;
+        }
+
+        .form-group .txt-error {
+            color: #E64D3A;
+            display: none;
+        }
+
+        form .form-group:not(.no-verify) .form-control:invalid ~ .txt-error {
+            display: block;
+        }
+
+        form .form-group:not(.no-verify) .form-control:invalid ~ .txt-helper {
+            display: none;
+        }
+
+
+        form .form-group:not(.no-verify) .form-control:valid ~ .form-control {
+            display: none;
+        }
+
+        form .form-group:not(.no-verify) .form-control:valid ~ .txt-helper {
+            display: block;
+            visibility: hidden;
+        }
+
+        .form:not(.no-verify) .txt-helper {
+            visibility: hidden;
+        }
+
+        .form-group .txt-error {
+            display: none;
+        }
+
+        .btn {
+            margin-top: 6px;
+            margin-bottom: 6px;
+            padding: 2px 10px;
+            font-weight: 400;
+            text-align: center;
+            font-size: 18px;
+            line-height: 2;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            transition: all 0.15s;
+            color: #fff;
+            background-color: #3499DC;
+            cursor: pointer;
+            outline: none;
+            user-select: none;
+        }
+
+        .btn:hover {
+            background-color: #0177c3;
+        }
+
+        form:not(.no-verify) .btn[disabled], form:not(.no-verify):invalid .btn {
+            background-color: #7dabcf;
+            cursor: auto;
+        }
+
+        /*** logic style ***/
+        .container {
+            margin: auto;
+            padding: 8px;
+            display: flex;
+            height: 100%;
+        }
+
+        @media (max-width: 750px) {
+            #form-register {
+                width: 100%;
+            }
+        }
+
+        #form-register {
+            box-sizing: border-box;
+            width: 367px;
+            border-radius: 4px;
+            padding: 30px 40px;
+            margin: auto;
+            box-shadow: 0 0 1rem rgba(0, 0, 0, .15);
+        }
+
+        #form-register .title {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        #form-register .txt-requesting {
+            display: none;
+        }
+
+        #form-register.requesting .txt-requesting {
+            display: inline;
+        }
+
+        #form-register.requesting .txt-submit {
+            display: none;
+        }
+
+        #form-register .btn-submit {
+            width: 100%;
+        }
+    </style>
+    <script>
+        (function () {
+            var base = 375;
+            var deviceWidth = document.documentElement.clientWidth
+            var scale = deviceWidth / base;
+            var meta = document.querySelector('meta[name="viewport"]');
+            meta.setAttribute('content', 'width=' + base + ',initial-scale=' + scale + ',maximum-scale=' + scale + ', minimum-scale=' + scale + ',user-scalable=no,target-densitydpi=device-dpi');
+        })();
+    </script>
+</head>
+<body>
+<div class="container">
+    <form id="form-register" class="no-verify">
+        <h2 class="title">Register With Us</h2>
+        <div class="form-group no-verify">
+            <label for="username">Username</label>
+            <input type="text" class="form-control"
+                   id="username" name="username"
+                   placeholder="Enter username"
+                   required
+                   pattern="^[a-zA-Z0-9_]{3,15}$"
+                   maxlength="15"
+                   data-valueMissing="username is empty"
+                   data-patternMismatch="3-15 letters or numbers, start with letter"
+                   value="hooke123">
+            <small class="form-text txt-helper"></small>
+            <small class="form-text txt-error">Username must be at least 3 characters</small>
+        </div>
+        <div class="form-group no-verify">
+            <label for="email">Email</label>
+            <input type="email" class="form-control"
+                   id="email" name='email'
+                   placeholder="Enter email"
+                   required
+                   pattern="^[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$"
+                   maxlength="30"
+                   data-typeMismatch="Email is not valid"
+                   data-patternMismatch="Email is not valid."
+                   value="cookmycode@gmail.com">
+            <small class="form-text txt-helper">Please input email format text</small>
+            <small class="form-text txt-error"></small>
+        </div>
+        <div class="form-group no-verify">
+            <label for="password">Password</label>
+            <input type="password" class="form-control"
+                   id="password" name="password"
+                   placeholder="Enter password"
+                   required
+                   pattern="^[A-Za-z0-9]{6,16}$"
+                   data-patternMismatch="Password must be at least 6 characters"
+                   maxlength="16">
+            <small class="form-text txt-helper">6-16 letters and numbers, start with letter</small>
+            <small class="form-text txt-error"></small>
+        </div>
+        <div class="form-group no-verify">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" class="form-control"
+                   id="confirmPassword" name="confirmPassword"
+                   placeholder="Enter password again"
+                   required maxlength="16"
+                   data-patternMismatch="Password2 is required"
+                   data-sameMismatch="password is not same"
+                   data-same="password">
+            <small class="form-text txt-helper">Please enter the same password</small>
+            <small class="form-text txt-error"></small>
+        </div>
+        <button type="submit" class="btn btn-submit">
+            <span class="txt-submit">Submit</span>
+            <span class="txt-requesting">requesting...</span>
+        </button>
+    </form>
+</div>
+
+<script>
+    // 使用块作用域隔离，代替自执行函数
+    {
+        /**
+         * HTML5 表单增强
+         */
+        class FormPro {
+            static DefaultProps = {
+                onSubmit: _ => {
+                },
+                statesText: {
+                    // html5 standard state
+                    valueMissing: 'should not be empty',
+                    typeMismatch: 'type mismatch',
+                    patternMismatch: 'pattern mismatch',
+                    tooLong: 'too long',
+                    tooShort: 'too short',
+                    rangeUnderflow: 'range underflow',
+                    rangeOverflow: 'range overflow',
+                    stepMismatch: 'step mismatch',
+                    badInput: 'bad input',
+                    customError: 'custom error',
+                    valid: 'valid',
+
+                    // custom state
+                    sameMismatch: 'should be same'
+                }
+            }
+
+            hasValidateBehavior = false;
+
+            constructor(formID, props = {}) {
+                this.$form = document.getElementById(formID);
+                this.props = {...FormPro.DefaultProps, ...props};
+
+                if (this.$form) {
+                    this._adjust();
+                    this._bindEvent();
+                } else {
+                    console.error("form isn't exist!");
+                }
+            }
+
+            // 调整表单默认行为
+            _adjust() {
+                const {$form} = this;
+                // 取消默认气泡
+                $form.setAttribute('novalidate', '');
+
+                // 修正html5表单验证默认执行的行为
+                $form.classList.add('no-verify');
+                $form.querySelectorAll('.form-group').forEach($group => {
+                    $group.classList.add('no-verify');
+                })
+            }
+
+            _bindEvent() {
+                const {$form, props} = this;
+                const {onSubmit} = props;
+
+                $form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.appendFormCheckBehavior();
+
+                    if (!this._validateForm()) return;
+                    onSubmit.call(this, this.serialize(), e);
+                });
+
+                const $inputs = this.getInputElements();
+                $inputs.forEach($input => {
+                    $input.addEventListener('input', () => {
+                        FormPro.appendInputCheckBehavior($input);
+                    }, {once: true})
+                })
+
+                $inputs.forEach($input => {
+                    $input.addEventListener('input', _ => this._validateInput($input))
+                })
+            }
+
+            _validateForm() {
+                const {$form} = this;
+                const $inputs = this.getInputElements();
+                $inputs.forEach(this._validateInput.bind(this));
+                return $form.checkValidity();
+            }
+
+            serialize() {
+                return FormPro.serializeForm(this.$form);
+            }
+
+            _validateInput($input) {
+                this._validateStandardState($input);
+                this._validateSameState($input);
+            }
+
+            // 检测html5标准错误状态
+            _validateStandardState($input) {
+                const {dataset} = $input;
+                const {statesText} = this.props;
+                const currentState = FormPro.getValidateState($input);
+
+                if (currentState !== 'valid') {
+                    const stateTxt = dataset[currentState.toLowerCase()] || statesText[currentState];
+                    $input.parentElement.querySelector('.txt-error').textContent = stateTxt;
+                }
+            }
+
+            // 检测自定义错误状态：same
+            _validateSameState($input) {
+                const {$form} = this;
+                const {dataset} = $input;
+                const {same} = dataset;
+                if (same) {
+                    const $targetInput = $form.querySelector(`input[name=${same}]`);
+                    const currentState = 'samemismatch';
+                    const isSame = FormPro.checkSame($input, $targetInput);
+                    if (!isSame) {
+                        const stateTxt = dataset[currentState] || statesText[currentState];
+                        $input.parentElement.querySelector('.txt-error').textContent = stateTxt;
+                    }
+                }
+            }
+
+            // 为单个input添加检测行为
+            static appendInputCheckBehavior($input) {
+                const $group = $input.closest('.form-group');
+                $group.classList.remove('no-verify');
+
+                const {pattern} = $input.dataset;
+                if (pattern) {
+                    $input.setAttribute('pattern', pattern);
+                }
+            }
+
+            // 为整个表单添加检测行为
+            appendFormCheckBehavior() {
+                if (this.hasValidateBehavior) return;
+
+                const $inputs = this.getInputElements();
+
+                this.$form.classList.remove('no-verify');
+                $inputs.forEach(FormPro.appendInputCheckBehavior);
+
+                this.hasValidateBehavior = true;
+            }
+
+
+            _requesting = true;
+
+            set requesting(value) {
+                const {$form} = this;
+                const $btnSubmit = $form.querySelector('[type=submit]');
+
+                if (value === true) {
+                    $form.classList.add('requesting');
+                    $btnSubmit.setAttribute('disabled', '');
+                } else {
+                    $form.classList.remove('requesting');
+                    $btnSubmit.removeAttribute('disabled');
+                }
+            }
+
+            get requesting() {
+                return this._requesting;
+            }
+
+            getInputElements() {
+                return FormPro.getInputElements(this.$form);
+            }
+
+            // 辅助校验：该input必须和name为same的input值相同
+            static checkSame($input, $targetInput) {
+                if ($input && $targetInput) {
+                    if ($input.value !== $targetInput.value) {
+                        $input.setCustomValidity('Password Must be Matching.');
+                        return false;
+                    } else {
+                        // input is valid -- reset the error message
+                        $input.setCustomValidity('');
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            static getValidateState($input) {
+                const {validity} = $input;
+                for (let key in validity) {
+                    // TODO: key其实在原型里，这里还需要再弄清楚
+                    if (validity[key]) {
+                        return key;
+                    }
+                }
+
+                return '';
+            }
+
+            // 获取所有input元素
+            static getInputElements(formElement) {
+                const elements = formElement.elements;
+                return Array.from(elements).filter(ele => ele.type !== 'submit');
+            }
+
+            // 序列化表单数据
+            static serializeForm($formElement) {
+                const result = {};
+
+                // 1th way
+                const formData = new FormData($formElement);
+
+                for (let data of formData) {
+                    const [name, value] = data;
+                    result[name] = value;
+                }
+
+                // 2th way
+                // FormPro.getInputElements($formElement)
+                //     .forEach(input => {
+                //         result[input.name] = input.value;
+                //     })
+
+                return result;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            new FormPro('form-register', {
+                onSubmit: function (e, data) {
+                    delete data.confirmPassword;
+
+                    this.requesting = true;
+                    mockRequest('https://qq.com', data)
+                        .then(result => {
+                            if (result.errno === 0) {
+                                alert('Success, Congratulations!');
+                            } else {
+                                alert(`fail[${result.errno}]`)
+                            }
+                        })
+                        .finally(_ => {
+                            this.requesting = false;
+                        })
+                },
+                statesText: {
+                    valueMissing: 'empty! :('
+                }
+            });
+
+            function mockRequest(url, data) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(_ => {
+                        resolve({
+                            errno: 0,
+                            msg: 'ok',
+                        })
+                    }, 1000);
+                })
+            }
+        });
+    }
+</script>
+</body>
+</html>
